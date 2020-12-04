@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ductri1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Detail_HD">
+          <Key>
+            <PropertyRef Name="SoHD" />
+          </Key>
+          <Property Name="SoHD" Type="char" MaxLength="255" Nullable="false" />
+          <Property Name="MASP" Type="char" MaxLength="255" Nullable="false" />
+          <Property Name="SL" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Hoadon">
+          <Key>
+            <PropertyRef Name="SoHD" />
+          </Key>
+          <Property Name="SoHD" Type="char" MaxLength="255" Nullable="false" />
+          <Property Name="MAKH" Type="int" Nullable="false" />
+          <Property Name="Ngaymua" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Khachhang">
+          <Key>
+            <PropertyRef Name="MAKH" />
+          </Key>
+          <Property Name="MAKH" Type="int" Nullable="false" />
+          <Property Name="TENKH" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Phone" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Loaisanpham">
+          <Key>
+            <PropertyRef Name="MALOAI" />
+          </Key>
+          <Property Name="MALOAI" Type="char" MaxLength="255" Nullable="false" />
+          <Property Name="TENLOAI" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sanpham">
+          <Key>
+            <PropertyRef Name="MASP" />
+          </Key>
+          <Property Name="MASP" Type="char" MaxLength="255" Nullable="false" />
+          <Property Name="TENSP" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="GIA" Type="int" Nullable="false" />
+          <Property Name="MALOAI" Type="char" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="Detail_HD_Hoadon">
+          <End Role="Hoadon" Type="Self.Hoadon" Multiplicity="1" />
+          <End Role="Detail_HD" Type="Self.Detail_HD" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Hoadon">
+              <PropertyRef Name="SoHD" />
+            </Principal>
+            <Dependent Role="Detail_HD">
+              <PropertyRef Name="SoHD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Detail_HD_Sanpham">
+          <End Role="Sanpham" Type="Self.Sanpham" Multiplicity="1" />
+          <End Role="Detail_HD" Type="Self.Detail_HD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sanpham">
+              <PropertyRef Name="MASP" />
+            </Principal>
+            <Dependent Role="Detail_HD">
+              <PropertyRef Name="MASP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Hoadon_Khachhang">
+          <End Role="Khachhang" Type="Self.Khachhang" Multiplicity="1" />
+          <End Role="Hoadon" Type="Self.Hoadon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Khachhang">
+              <PropertyRef Name="MAKH" />
+            </Principal>
+            <Dependent Role="Hoadon">
+              <PropertyRef Name="MAKH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Sanpham_Loaisanpham">
+          <End Role="Loaisanpham" Type="Self.Loaisanpham" Multiplicity="1" />
+          <End Role="Sanpham" Type="Self.Sanpham" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Loaisanpham">
+              <PropertyRef Name="MALOAI" />
+            </Principal>
+            <Dependent Role="Sanpham">
+              <PropertyRef Name="MALOAI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ductri1ModelStoreContainer">
+          <EntitySet Name="Detail_HD" EntityType="Self.Detail_HD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hoadon" EntityType="Self.Hoadon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Khachhang" EntityType="Self.Khachhang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Loaisanpham" EntityType="Self.Loaisanpham" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sanpham" EntityType="Self.Sanpham" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Detail_HD_Hoadon" Association="Self.Detail_HD_Hoadon">
+            <End Role="Hoadon" EntitySet="Hoadon" />
+            <End Role="Detail_HD" EntitySet="Detail_HD" />
+          </AssociationSet>
+          <AssociationSet Name="Detail_HD_Sanpham" Association="Self.Detail_HD_Sanpham">
+            <End Role="Sanpham" EntitySet="Sanpham" />
+            <End Role="Detail_HD" EntitySet="Detail_HD" />
+          </AssociationSet>
+          <AssociationSet Name="Hoadon_Khachhang" Association="Self.Hoadon_Khachhang">
+            <End Role="Khachhang" EntitySet="Khachhang" />
+            <End Role="Hoadon" EntitySet="Hoadon" />
+          </AssociationSet>
+          <AssociationSet Name="Sanpham_Loaisanpham" Association="Self.Sanpham_Loaisanpham">
+            <End Role="Loaisanpham" EntitySet="Loaisanpham" />
+            <End Role="Sanpham" EntitySet="Sanpham" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ductri1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Detail_HD">
+          <Key>
+            <PropertyRef Name="SoHD" />
+          </Key>
+          <Property Name="SoHD" Type="String" MaxLength="255" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="MASP" Type="String" MaxLength="255" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="SL" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Hoadon" Relationship="Self.Detail_HD_Hoadon" FromRole="Detail_HD" ToRole="Hoadon" />
+          <NavigationProperty Name="Sanpham" Relationship="Self.Detail_HD_Sanpham" FromRole="Detail_HD" ToRole="Sanpham" />
+        </EntityType>
+        <EntityType Name="Hoadon">
+          <Key>
+            <PropertyRef Name="SoHD" />
+          </Key>
+          <Property Name="SoHD" Type="String" MaxLength="255" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="MAKH" Type="Int32" Nullable="false" />
+          <Property Name="Ngaymua" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Detail_HD" Relationship="Self.Detail_HD_Hoadon" FromRole="Hoadon" ToRole="Detail_HD" />
+          <NavigationProperty Name="Khachhang" Relationship="Self.Hoadon_Khachhang" FromRole="Hoadon" ToRole="Khachhang" />
+        </EntityType>
+        <EntityType Name="Khachhang">
+          <Key>
+            <PropertyRef Name="MAKH" />
+          </Key>
+          <Property Name="MAKH" Type="Int32" Nullable="false" />
+          <Property Name="TENKH" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Hoadons" Relationship="Self.Hoadon_Khachhang" FromRole="Khachhang" ToRole="Hoadon" />
+        </EntityType>
+        <EntityType Name="Loaisanpham">
+          <Key>
+            <PropertyRef Name="MALOAI" />
+          </Key>
+          <Property Name="MALOAI" Type="String" MaxLength="255" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TENLOAI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Sanphams" Relationship="Self.Sanpham_Loaisanpham" FromRole="Loaisanpham" ToRole="Sanpham" />
+        </EntityType>
+        <EntityType Name="Sanpham">
+          <Key>
+            <PropertyRef Name="MASP" />
+          </Key>
+          <Property Name="MASP" Type="String" MaxLength="255" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TENSP" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GIA" Type="Int32" Nullable="false" />
+          <Property Name="MALOAI" Type="String" MaxLength="255" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Detail_HD" Relationship="Self.Detail_HD_Sanpham" FromRole="Sanpham" ToRole="Detail_HD" />
+          <NavigationProperty Name="Loaisanpham" Relationship="Self.Sanpham_Loaisanpham" FromRole="Sanpham" ToRole="Loaisanpham" />
+        </EntityType>
+        <Association Name="Detail_HD_Hoadon">
+          <End Role="Hoadon" Type="Self.Hoadon" Multiplicity="1" />
+          <End Role="Detail_HD" Type="Self.Detail_HD" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Hoadon">
+              <PropertyRef Name="SoHD" />
+            </Principal>
+            <Dependent Role="Detail_HD">
+              <PropertyRef Name="SoHD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Detail_HD_Sanpham">
+          <End Role="Sanpham" Type="Self.Sanpham" Multiplicity="1" />
+          <End Role="Detail_HD" Type="Self.Detail_HD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sanpham">
+              <PropertyRef Name="MASP" />
+            </Principal>
+            <Dependent Role="Detail_HD">
+              <PropertyRef Name="MASP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Hoadon_Khachhang">
+          <End Role="Khachhang" Type="Self.Khachhang" Multiplicity="1" />
+          <End Role="Hoadon" Type="Self.Hoadon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Khachhang">
+              <PropertyRef Name="MAKH" />
+            </Principal>
+            <Dependent Role="Hoadon">
+              <PropertyRef Name="MAKH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Sanpham_Loaisanpham">
+          <End Role="Loaisanpham" Type="Self.Loaisanpham" Multiplicity="1" />
+          <End Role="Sanpham" Type="Self.Sanpham" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Loaisanpham">
+              <PropertyRef Name="MALOAI" />
+            </Principal>
+            <Dependent Role="Sanpham">
+              <PropertyRef Name="MALOAI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ductri1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Detail_HD" EntityType="Self.Detail_HD" />
+          <EntitySet Name="Hoadons" EntityType="Self.Hoadon" />
+          <EntitySet Name="Khachhangs" EntityType="Self.Khachhang" />
+          <EntitySet Name="Loaisanphams" EntityType="Self.Loaisanpham" />
+          <EntitySet Name="Sanphams" EntityType="Self.Sanpham" />
+          <AssociationSet Name="Detail_HD_Hoadon" Association="Self.Detail_HD_Hoadon">
+            <End Role="Hoadon" EntitySet="Hoadons" />
+            <End Role="Detail_HD" EntitySet="Detail_HD" />
+          </AssociationSet>
+          <AssociationSet Name="Detail_HD_Sanpham" Association="Self.Detail_HD_Sanpham">
+            <End Role="Sanpham" EntitySet="Sanphams" />
+            <End Role="Detail_HD" EntitySet="Detail_HD" />
+          </AssociationSet>
+          <AssociationSet Name="Hoadon_Khachhang" Association="Self.Hoadon_Khachhang">
+            <End Role="Khachhang" EntitySet="Khachhangs" />
+            <End Role="Hoadon" EntitySet="Hoadons" />
+          </AssociationSet>
+          <AssociationSet Name="Sanpham_Loaisanpham" Association="Self.Sanpham_Loaisanpham">
+            <End Role="Loaisanpham" EntitySet="Loaisanphams" />
+            <End Role="Sanpham" EntitySet="Sanphams" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ductri1ModelStoreContainer" CdmEntityContainer="ductri1Entities">
+          <EntitySetMapping Name="Detail_HD">
+            <EntityTypeMapping TypeName="ductri1Model.Detail_HD">
+              <MappingFragment StoreEntitySet="Detail_HD">
+                <ScalarProperty Name="SoHD" ColumnName="SoHD" />
+                <ScalarProperty Name="MASP" ColumnName="MASP" />
+                <ScalarProperty Name="SL" ColumnName="SL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hoadons">
+            <EntityTypeMapping TypeName="ductri1Model.Hoadon">
+              <MappingFragment StoreEntitySet="Hoadon">
+                <ScalarProperty Name="SoHD" ColumnName="SoHD" />
+                <ScalarProperty Name="MAKH" ColumnName="MAKH" />
+                <ScalarProperty Name="Ngaymua" ColumnName="Ngaymua" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Khachhangs">
+            <EntityTypeMapping TypeName="ductri1Model.Khachhang">
+              <MappingFragment StoreEntitySet="Khachhang">
+                <ScalarProperty Name="MAKH" ColumnName="MAKH" />
+                <ScalarProperty Name="TENKH" ColumnName="TENKH" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Loaisanphams">
+            <EntityTypeMapping TypeName="ductri1Model.Loaisanpham">
+              <MappingFragment StoreEntitySet="Loaisanpham">
+                <ScalarProperty Name="MALOAI" ColumnName="MALOAI" />
+                <ScalarProperty Name="TENLOAI" ColumnName="TENLOAI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sanphams">
+            <EntityTypeMapping TypeName="ductri1Model.Sanpham">
+              <MappingFragment StoreEntitySet="Sanpham">
+                <ScalarProperty Name="MASP" ColumnName="MASP" />
+                <ScalarProperty Name="TENSP" ColumnName="TENSP" />
+                <ScalarProperty Name="GIA" ColumnName="GIA" />
+                <ScalarProperty Name="MALOAI" ColumnName="MALOAI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

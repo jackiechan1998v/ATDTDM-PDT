@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ductri1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Detail_HD">
+    <Key>
+      <PropertyRef Name="SoHD" />
+    </Key>
+    <Property Name="SoHD" Type="char" MaxLength="255" Nullable="false" />
+    <Property Name="MASP" Type="char" MaxLength="255" Nullable="false" />
+    <Property Name="SL" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Hoadon">
+    <Key>
+      <PropertyRef Name="SoHD" />
+    </Key>
+    <Property Name="SoHD" Type="char" MaxLength="255" Nullable="false" />
+    <Property Name="MAKH" Type="int" Nullable="false" />
+    <Property Name="Ngaymua" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Khachhang">
+    <Key>
+      <PropertyRef Name="MAKH" />
+    </Key>
+    <Property Name="MAKH" Type="int" Nullable="false" />
+    <Property Name="TENKH" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Address" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Phone" Type="int" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Loaisanpham">
+    <Key>
+      <PropertyRef Name="MALOAI" />
+    </Key>
+    <Property Name="MALOAI" Type="char" MaxLength="255" Nullable="false" />
+    <Property Name="TENLOAI" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sanpham">
+    <Key>
+      <PropertyRef Name="MASP" />
+    </Key>
+    <Property Name="MASP" Type="char" MaxLength="255" Nullable="false" />
+    <Property Name="TENSP" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="GIA" Type="int" Nullable="false" />
+    <Property Name="MALOAI" Type="char" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <Association Name="Detail_HD_Hoadon">
+    <End Role="Hoadon" Type="Self.Hoadon" Multiplicity="1" />
+    <End Role="Detail_HD" Type="Self.Detail_HD" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Hoadon">
+        <PropertyRef Name="SoHD" />
+      </Principal>
+      <Dependent Role="Detail_HD">
+        <PropertyRef Name="SoHD" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Detail_HD_Sanpham">
+    <End Role="Sanpham" Type="Self.Sanpham" Multiplicity="1" />
+    <End Role="Detail_HD" Type="Self.Detail_HD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sanpham">
+        <PropertyRef Name="MASP" />
+      </Principal>
+      <Dependent Role="Detail_HD">
+        <PropertyRef Name="MASP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Hoadon_Khachhang">
+    <End Role="Khachhang" Type="Self.Khachhang" Multiplicity="1" />
+    <End Role="Hoadon" Type="Self.Hoadon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Khachhang">
+        <PropertyRef Name="MAKH" />
+      </Principal>
+      <Dependent Role="Hoadon">
+        <PropertyRef Name="MAKH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Sanpham_Loaisanpham">
+    <End Role="Loaisanpham" Type="Self.Loaisanpham" Multiplicity="1" />
+    <End Role="Sanpham" Type="Self.Sanpham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Loaisanpham">
+        <PropertyRef Name="MALOAI" />
+      </Principal>
+      <Dependent Role="Sanpham">
+        <PropertyRef Name="MALOAI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ductri1ModelStoreContainer">
+    <EntitySet Name="Detail_HD" EntityType="Self.Detail_HD" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Hoadon" EntityType="Self.Hoadon" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Khachhang" EntityType="Self.Khachhang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Loaisanpham" EntityType="Self.Loaisanpham" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sanpham" EntityType="Self.Sanpham" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="Detail_HD_Hoadon" Association="Self.Detail_HD_Hoadon">
+      <End Role="Hoadon" EntitySet="Hoadon" />
+      <End Role="Detail_HD" EntitySet="Detail_HD" />
+    </AssociationSet>
+    <AssociationSet Name="Detail_HD_Sanpham" Association="Self.Detail_HD_Sanpham">
+      <End Role="Sanpham" EntitySet="Sanpham" />
+      <End Role="Detail_HD" EntitySet="Detail_HD" />
+    </AssociationSet>
+    <AssociationSet Name="Hoadon_Khachhang" Association="Self.Hoadon_Khachhang">
+      <End Role="Khachhang" EntitySet="Khachhang" />
+      <End Role="Hoadon" EntitySet="Hoadon" />
+    </AssociationSet>
+    <AssociationSet Name="Sanpham_Loaisanpham" Association="Self.Sanpham_Loaisanpham">
+      <End Role="Loaisanpham" EntitySet="Loaisanpham" />
+      <End Role="Sanpham" EntitySet="Sanpham" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

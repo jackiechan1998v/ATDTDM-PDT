@@ -1,0 +1,43 @@
+﻿@model WebApplication1.Models.Sanpham
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Sanpham</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TENSP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TENSP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GIA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GIA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Loaisanpham.TENLOAI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Loaisanpham.TENLOAI)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MASP }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
